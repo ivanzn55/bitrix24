@@ -1,0 +1,13 @@
+{
+  "name": "vendor_name/local",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Otus\\": "php_interface/include/classes/Otus/"
+    }
+  }
+}
