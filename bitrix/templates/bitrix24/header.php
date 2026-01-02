@@ -47,9 +47,11 @@ Loader::includeModule('intranet');
 	'calendar.sliderloader',
 	'ui.counter',
 	'ui.buttons',
+	'ui.icon-set.solid'
 ]);
 
 $isBitrix24Cloud = ModuleManager::isModuleInstalled('bitrix24');
+
 $isCompositeMode = defined('USE_HTML_STATIC_CACHE');
 $isIndexPage =
 	$APPLICATION->GetCurPage(true) === SITE_DIR . 'stream/index.php' ||
