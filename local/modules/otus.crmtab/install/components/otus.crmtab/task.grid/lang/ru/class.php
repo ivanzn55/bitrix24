@@ -1,0 +1,9 @@
+<?php
+$MESS['TAKS_GRID_TASK_TITLE_LABEL'] = 'Название задачи';
+$MESS['TAKS_GRID_TASK_MANAGER'] = 'Менеджер';
+$MESS['TAKS_GRID_TASK_CREATE_DATE_LABEL'] = 'Дата создания';
+$MESS['TAKS_GRID_TASK_COMMENT_LABEL'] = 'Комментарий';
+$MESS['TAKS_GRID_TASK_COMPLETED_LABEL'] = 'Выполнено';
+$MESS['TAKS_GRID_TASK_COMPANY_NAME_LABEL'] = 'Компания';
+$MESS['TAKS_GRID_TASK_PERSON_LABEL'] = 'Контактное лицо';
+$MESS['TAKS_GRID_TASK_PRICE_LABEL'] = 'Цена';
