@@ -4,6 +4,7 @@
   "minimum-stability": "stable",
   "license": "proprietary",
   "require": {
+    "hflabs/dadata": "^24.4"
   },
   "autoload": {
     "psr-4": {
