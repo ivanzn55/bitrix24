@@ -95,6 +95,8 @@ composer.phar
 /local/vendor/*
 /files/*
 .well-known/*
+/integration/contacts/settings.php
+/integration/contacts/logs/*
 
 !/bitrix/php_interface/migrations/*
 !/bitrix/php_interface/migrations/.xml
