@@ -11,6 +11,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
 use Bitrix\Main\Page\AssetMode;
 use Bitrix\Main\Web\Json;
+use Bitrix\Intranet\Public\Provider\Portal\LanguageProvider;
 
 \Bitrix\Main\UI\Extension::load(['pull.client']);
 
@@ -64,8 +65,7 @@ AirTemplate::tryApplyDefaultTopMenu();
 							</a>
 						</div>
 						<?php
-							$b24Languages = [];
-							include($_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/languages.php');
+							$b24Languages = (new LanguageProvider())->getPublicArray();
 						?>
 						<div class="air-footer__button">
 							<button
@@ -81,26 +81,27 @@ AirTemplate::tryApplyDefaultTopMenu();
 				<div class="air-footer__links">
 					<?
 						$partnerID = \COption::getOptionString('bitrix24', 'partner_id', '');
-						if ($isBitrix24Cloud && $partnerID && Loader::includeModule('bitrix24'))
+						$showPartnerOptions = $isBitrix24Cloud && Loader::includeModule('bitrix24');
+						if ($partnerID && $showPartnerOptions)
 						{
 							$formParams = \CBitrix24::getPartnerFormParams();
-							$formParams['messages']['BX24_PARTNER_TITLE'] = Loc::getMessage('BITRIX24_AIR_PARTNER_POPUP_TITLE');
-							$formParams['messages']['BX24_BUTTON_SEND'] = Loc::getMessage('BITRIX24_AIR_PARTNER_POPUP_BUTTON');
-
 							?><button
 								onclick='BX.Intranet.Bitrix24.PartnerForm.showConnectForm(<?= Json::encode($formParams) ?>);'
 								class="air-footer__link"
 								><?=Loc::getMessage('BITRIX24_AIR_PARTNER_CONNECT')?>
 							</button><?php
 						}
-						elseif (!$isCollaber && $isBitrix24Cloud && Loader::includeModule('bitrix24'))
+						elseif (!$isCollaber && $showPartnerOptions)
 						{
-							$orderParams = \CBitrix24::getPartnerOrderFormParams();
+							$orderParams = [];
+							$orderParams['title'] = Loc::getMessage('BITRIX24_AIR_PARTNER_POPUP_TITLE');
+							$orderParams['source'] = 'intranet.bitrix24.partner-order-form';
 							?><button
-								class="air-footer__link"
-								onclick='BX.Intranet.Bitrix24.PartnerForm.showIntegrationOrderForm(<?= Json::encode($orderParams) ?>);'
-							><?=Loc::getMessage("BITRIX24_AIR_PARTNER_ORDER")?>
-							</button><?
+							class="air-footer__link"
+							onclick='BX.Intranet.Bitrix24.PartnerForm.showIntegrationOrderForm(<?= Json::encode($orderParams) ?>);'
+							>
+							<?= Loc::getMessage("BITRIX24_AIR_PARTNER_ORDER") ?>
+							</button><?php
 						}
 						else
 						{
@@ -145,21 +146,19 @@ if (!$imEnabled || !$imEmbedded)
 	);
 }
 
-$APPLICATION->includeComponent('bitrix:intranet.connection.status', '', ['rootContainer' => '#connection-status']);
-
 $dynamicArea = new StaticArea('footer-components');
 $dynamicArea->setAssetMode(AssetMode::STANDARD);
 $dynamicArea->startDynamicArea();
 
-$APPLICATION->includeComponent('bitrix:intranet.invitation.notification', '', []);
 $APPLICATION->includeComponent('bitrix:intranet.mobile.popup', '', []);
+$APPLICATION->includeComponent('bitrix:intranet.invitation.notification', '', []);
 $APPLICATION->includeComponent('bitrix:intranet.placement', '', []);
 $APPLICATION->includeComponent('bitrix:bizproc.debugger', '', []);
 $APPLICATION->includeComponent('bitrix:timeman.report.status', '', []);
 $APPLICATION->includeComponent($isBitrix24Cloud ? 'bitrix:bitrix24.notify.panel' : 'bitrix:intranet.notify.panel', '');
 $APPLICATION->includeComponent('bitrix:intranet.mail.check', '', []);
-$APPLICATION->includeComponent('bitrix:intranet.bitrix24.release', '', []);
 $APPLICATION->includeComponent('bitrix:intranet.otp.info', '', []);
+$APPLICATION->includeComponent('bitrix:intranet.connection.status', '', ['rootContainer' => '#connection-status']);
 
 $dynamicArea->finishDynamicArea();
 ?>

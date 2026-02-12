@@ -3,6 +3,7 @@
 use Otus\Event\DealHandler;
 use Otus\Event\IblockElementEvent;
 use Otus\Event\IblockElementHandler;
+use Otus\Rest\TaskApi;
 
 $eventManager = \Bitrix\Main\EventManager::getInstance();
 
@@ -33,5 +34,14 @@ $eventManager->addEventHandlerCompatible(
     [
         DealHandler::class,
         'onAfterDealUpdate'
+    ]
+);
+
+$eventManager->addEventHandlerCompatible(
+    'rest',
+    'OnRestServiceBuildDescription',
+    [
+        TaskApi::class,
+        'OnRestServiceBuildDescriptionHandler'
     ]
 );
