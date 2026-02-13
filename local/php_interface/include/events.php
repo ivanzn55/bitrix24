@@ -5,6 +5,8 @@ use Otus\Event\IblockElementEvent;
 use Otus\Event\IblockElementHandler;
 use Otus\Rest\TaskApi;
 
+use Otus\Event\Main;
+
 $eventManager = \Bitrix\Main\EventManager::getInstance();
 
 //$eventManager->addEventHandlerCompatible('main', 'OnPageStart', '\Otus\Event\Main::handlerPageStart');
@@ -44,4 +46,11 @@ $eventManager->addEventHandlerCompatible(
         TaskApi::class,
         'OnRestServiceBuildDescriptionHandler'
     ]
+);
+
+
+$eventManager->addEventHandler(
+    'main',
+    'OnProlog',
+    [Main::class, 'OnProlog']
 );

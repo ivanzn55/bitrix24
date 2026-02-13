@@ -3,6 +3,7 @@
 namespace Otus\Event;
 
 use Bitrix\Main\Context;
+use Bitrix\Main\UI\Extension;
 use Otus\Debug\HistoryPage;
 
 class Main
@@ -17,5 +18,10 @@ class Main
         if(in_array($page, $pages)){
             HistoryPage::add();
         }
+    }
+
+    public static function OnProlog():void
+    {
+        Extension::load('otus.ctimeman');
     }
 }
